@@ -2,6 +2,8 @@ package it.polito.tdp.librettovoti.model;
 
 import java.util.*;
 
+import db.LibrettoDAO;
+
 public class Libretto {
 	
 	private List<Voto> listaVoti;
@@ -10,8 +12,10 @@ public class Libretto {
 		this.listaVoti = new ArrayList<Voto>();
 	}
 	
-	public void add(Voto v) {
-		this.listaVoti.add(v);
+	public boolean add(Voto v) {
+		LibrettoDAO dao = new LibrettoDAO();
+		boolean res =dao.createVoto(v);
+		return res;
 	}
 	
 	public Libretto filtraVoti(int punti) {
@@ -53,6 +57,37 @@ public class Libretto {
 			return true;
 		else
 			return false;
+	}
+	
+	public List<Voto> getVoti(){
+		LibrettoDAO dao = new LibrettoDAO();
+		return dao.readAllVoto();
+	}
+	
+	public Libretto votiMigliorati() {
+		Libretto nuovo = new Libretto();
+		for(Voto v : this.listaVoti) {
+			int punti = v.getPunti();
+			
+			if(punti>=24)
+				punti+=2;
+			else
+				punti+=1;
+			
+			if(punti>30)
+				punti=30;
+			
+			nuovo.add(new Voto(v.getNomeCorso(),punti));
+		}
+		return nuovo;
+	}
+	
+	public void cancellaVotiMinori(int punti) {
+		for(Voto v : this.listaVoti) {
+			if(v.getPunti()<punti) {
+				this.listaVoti.remove(v);				
+			}
+		}
 	}
 	
 	public String toString() {
