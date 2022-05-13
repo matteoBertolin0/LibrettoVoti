@@ -77,7 +77,7 @@ public class Libretto {
 			if(punti>30)
 				punti=30;
 			
-			nuovo.add(new Voto(v.getNomeCorso(),punti));
+			nuovo.add(new Voto(v.getNomeCorso(),punti, v.getData()));
 		}
 		return nuovo;
 	}

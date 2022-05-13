@@ -1,6 +1,7 @@
 package it.polito.tdp.librettovoti;
 
 import it.polito.tdp.librettovoti.model.Libretto;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
